@@ -15,10 +15,10 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <body>
 
-<div id="vm" style="margin-top: 10vh">
+<div id="vm" style="margin-top: 5vh">
     <button type="button" class="btn btn-primary" @click="addRow">增加一行</button>
     <button type="button" class="btn btn-success" style="margin-left: 50px">选中的总价 ： {{ chooseTotal }}</button>
-    <button type="button" class="btn btn-primary" style="margin-left: 50px" @click="deleteRow">删除选中</button>
+    <button type="button" class="btn btn-primary" style="margin-top: 10px; margin-left: 50px" @click="deleteRow">删除选中</button>
 
     <table class="table">
         <thead>
@@ -37,19 +37,19 @@
                     <input type="checkbox" v-bind:value="index" v-model="chooseList">
                 </td>
                 <td>
-                    <input type="number" style="width: 80px; border-top: 0; border-left: 0; border-right: 0"
+                    <input type="number" style="width: 70px; border-top: 0; border-left: 0; border-right: 0"
                            v-model="shopList[index].price">
                 </td>
                 <td>
-                    <input type="number" style="width: 80px; border-top: 0; border-left: 0; border-right: 0"
+                    <input type="number" style="width: 70px; border-top: 0; border-left: 0; border-right: 0"
                            v-model="shopList[index].discount">
                 </td>
                 <td>
-                    <input type="number" style="width: 80px; border-top: 0; border-left: 0; border-right: 0"
+                    <input type="number" style="width: 70px; border-top: 0; border-left: 0; border-right: 0"
                            v-model="shopList[index].num">
                 </td>
                 <td>
-                    <input type="number" style="width: 80px; border-top: 0; border-left: 0; border-right: 0"
+                    <input type="number" style="width: 70px; border-top: 0; border-left: 0; border-right: 0"
                            v-model="rowTotal['total' + index]">
                 </td>
             </tr>
