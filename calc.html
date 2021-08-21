@@ -1,0 +1,121 @@
+<!--
+*Author: Eloise
+*Date: 2021-08-21 13:52
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>calc</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<body>
+
+<div id="vm">
+    <button type="button" class="btn btn-primary" @click="addRow">增加一行</button>
+    <button type="button" class="btn btn-success" style="margin-left: 50px">选中的总价 ： {{ chooseTotal }}</button>
+    <button type="button" class="btn btn-primary" style="margin-left: 50px" @click="deleteRow">删除选中</button>
+
+    <table class="table col-sm-6">
+        <thead>
+        <tr>
+            <th scope="col">选中</th>
+            <th scope="col">单价</th>
+            <th scope="col">折扣</th>
+            <th scope="col">数量</th>
+            <th scope="col">总价</th>
+        </tr>
+        </thead>
+        <tbody>
+        <template v-for="(list, index) in shopList">
+            <tr>
+                <td>
+                    <input type="checkbox" v-bind:value="index" v-model="chooseList">
+                </td>
+                <td>
+                    <input type="number" style="width: 80px; border-top: 0; border-left: 0; border-right: 0"
+                           v-model="shopList[index].price">
+                </td>
+                <td>
+                    <input type="number" style="width: 80px; border-top: 0; border-left: 0; border-right: 0"
+                           v-model="shopList[index].discount">
+                </td>
+                <td>
+                    <input type="number" style="width: 80px; border-top: 0; border-left: 0; border-right: 0"
+                           v-model="shopList[index].num">
+                </td>
+                <td>
+                    <input type="number" style="width: 80px; border-top: 0; border-left: 0; border-right: 0"
+                           v-model="rowTotal['total' + index]">
+                </td>
+            </tr>
+        </template>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    new Vue({
+        el: '#vm',
+        data: {
+            shopList: [],
+            chooseList: [],
+        },
+        created() {
+            this.shopList.push({
+                price: '',
+                discount: 10,
+                num: 1,
+                isCheck: true
+            })
+            for (let i = 0; i < this.shopList.length; i++) {
+                this.chooseList.push(i)
+            }
+        },
+        computed: {
+            rowTotal() {
+                let res = {}
+                for (let i in this.shopList) {
+                    res['total' + i] = this.shopList[i].price * (this.shopList[i].discount / 10) * this.shopList[i].num
+                }
+                return res
+            },
+            chooseTotal() {
+                let res = 0
+                for (let i = 0; i < this.shopList.length; i++) {
+                    res += parseInt(this.rowTotal['total' + i])
+                }
+                return res
+            }
+        },
+        methods: {
+            addRow() {
+                this.shopList.push({
+                    price: '',
+                    discount: 10,
+                    num: 1,
+                })
+                this.reCalcChoose()
+            },
+            deleteRow() {
+                let chooseList = this.chooseList
+                this.shopList = this.shopList.filter((k, i) => {
+                    if (chooseList.indexOf(i) === -1) {
+                        return k
+                    }
+                })
+            },
+            reCalcChoose() {
+                this.chooseList = []
+                for (let i = 0; i < this.shopList.length; i++) {
+                    this.chooseList.push(i)
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>
